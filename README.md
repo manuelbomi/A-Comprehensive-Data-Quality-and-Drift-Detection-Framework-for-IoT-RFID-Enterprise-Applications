@@ -77,12 +77,14 @@ price_lookup_schema = StructType([
 rfid_inventory_schema = StructType([
     StructField("timestamp", TimestampType(), False),
     StructField("tagInventoryEvent", StructType([
-        StructField("epcHex", StringType(), False),
-        StructField("antennaPort", IntegerType(), False),
-        StructField("peakRssiCdbm", IntegerType(), False),
-        StructField("frequency", IntegerType(), False),
-        StructField("transmitPowerCdbm", IntegerType(), False),
-        StructField("llrpPhaseAngle", IntegerType(), False)
+        StructField("epc_number", StringType(), False),
+        StructField("gateway_location", StringType(), False),
+        StructField("gateway_xmit_power", IntegerType(), False),
+        StructField( "gateway_ph_ang", IntegerType(), False)
+        StructField("gateway_ant_port" , IntegerType(), False),
+        StructField("gateway_ant_rssi" , IntegerType(), False),
+        StructField("gateway_freq", IntegerType(), False),
+        
     ]), False)
 ])
 
@@ -157,8 +159,8 @@ class DataQualityValidator:
             )
         elif event_type == "tag_inventory":
             return df.filter(
-                (col("tagInventoryEvent.antennaPort").between(1, 16)) &
-                (col("tagInventoryEvent.peakRssiCdbm").between(-10000, 0))
+                (col("tagInventoryEvent.gateway_ant_port").between(1, 16)) &
+                (col("tagInventoryEvent.gateway_ant_rssi").between(-10000, 0))
             )
         return df
 
@@ -366,8 +368,8 @@ class StreamingQualityMonitor:
         elif event_type == "price_lookup":
             return col("item_details.price").cast("double") > 0
         elif event_type == "tag_inventory":
-            return (col("tagInventoryEvent.antennaPort").between(1, 16)) & \
-                   (col("tagInventoryEvent.peakRssiCdbm").between(-10000, 0))
+            return (col("tagInventoryEvent.gateway_ant_port").between(1, 16)) & \
+                   (col("tagInventoryEvent.gateway_ant_rssi").between(-10000, 0))
         return col("timestamp").isNotNull()
     
     def _calculate_quality_score_udf(self):
@@ -541,9 +543,9 @@ def comprehensive_iot_quality_demo():
         
         # Simulate new data with drift
         drifted_data = [
-            {"event": "temperature_read", "epc": "3014B2C3D4E5FA", "temperature": 25.5, "unit": "C", "timestamp": "2024-01-15T11:00:00Z"},
-            {"event": "temperature_read", "epc": "3014B2C3D4E5FB", "temperature": 26.1, "unit": "C", "timestamp": "2024-01-15T11:01:00Z"},
-            {"event": "temperature_read", "epc": "3014B2C3D4E5FC", "temperature": 24.8, "unit": "C", "timestamp": "2024-01-15T11:02:00Z"}
+            {"event": "temperature_read", "epc": "3014B2C3D4E5FA", "temperature": 25.5, "unit": "C", "timestamp": "2011-01-15T11:00:00Z"},
+            {"event": "temperature_read", "epc": "3014B2C3D4E5FB", "temperature": 26.1, "unit": "C", "timestamp": "2011-01-15T11:01:00Z"},
+            {"event": "temperature_read", "epc": "3014B2C3D4E5FC", "temperature": 24.8, "unit": "C", "timestamp": "2011-01-15T11:02:00Z"}
         ]
         
         drifted_df = spark.createDataFrame(drifted_data, temperature_schema)
