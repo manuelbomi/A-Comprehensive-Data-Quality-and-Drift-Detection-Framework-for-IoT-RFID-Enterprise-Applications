@@ -32,3 +32,15 @@
 | Processing  | Statistical validation, Drift detection, Business rules | PySpark ML, Scikit-learn, Stream processing |
 | Monitoring  | Quality dashboards, Alerting, Lineage tracking  | Grafana, DataDog, Custom monitors          |
 | Governance  | MDM, SLA management, Quality metrics            | Data catalogs, Quality scoring             |
+
+--- 
+
+## Data Quality Dimensions
+
+#### Traditional DQ Dimensions
+
+| Dimension     | Description                               | Detection Methods                  |
+|---------------|-------------------------------------------|------------------------------------|
+| Concept Drift | Statistical properties of target change   | KS-test, Wasserstein distance      |
+| Data Drift    | Input data distribution changes           | ANOVA, Distribution comparison     |
+| Model Drift   | Model performance degradation             | Accuracy monitoring, Feature drift |
