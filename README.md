@@ -25,11 +25,10 @@
 
 #### Multi-Layer Data Quality Framework
 
-
-Please help turn this      
-Layer	Components	Technologies
-Source	Sensor calibration, Environmental optimization, Edge validation	RFID readers, IoT sensors, Edge computing
-Ingestion	Schema enforcement, Protocol handling, Duplicate filtering	PySpark, MQTT, Kafka, Schema Registry
-Processing	Statistical validation, Drift detection, Business rules	PySpark ML, Scikit-learn, Stream processing
-Monitoring	Quality dashboards, Alerting, Lineage tracking	Grafana, DataDog, Custom monitors
-Governance	MDM, SLA management, Quality metrics	Data catalogs, Quality scoring                        into a github markdown table
+| Layer       | Components                                      | Technologies                               |
+|-------------|-------------------------------------------------|--------------------------------------------|
+| Source      | Sensor calibration, Environmental optimization, Edge validation | RFID readers, IoT sensors, Edge computing  |
+| Ingestion   | Schema enforcement, Protocol handling, Duplicate filtering | PySpark, MQTT, Kafka, Schema Registry      |
+| Processing  | Statistical validation, Drift detection, Business rules | PySpark ML, Scikit-learn, Stream processing |
+| Monitoring  | Quality dashboards, Alerting, Lineage tracking  | Grafana, DataDog, Custom monitors          |
+| Governance  | MDM, SLA management, Quality metrics            | Data catalogs, Quality scoring             |
