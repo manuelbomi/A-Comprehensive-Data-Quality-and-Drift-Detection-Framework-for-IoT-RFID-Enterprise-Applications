@@ -322,7 +322,7 @@ class IoTDataQualityPipeline:
 
 ```
 
-#### <ins>5. Real-time Streaming Quality Monitor</ins>
+#### <ins>5. Real-time Streaming Data Quality Monitor</ins>
 
 ```ruby
 from pyspark.sql.streaming import StreamingQuery
